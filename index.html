@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nexel Clothing – Luxury Meets Lifestyle</title>
+<meta name="description" content="Nexel Clothing — where luxury meets lifestyle. Explore premium fashion, sleek gadgets, and signature fragrances. Quality, style, and elegance in every product. Shop now and elevate your everyday experience.">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+    <div class="logo">
+        <img src="logo.png" alt="Nexel Clothing Logo" id="logo">
+    </div>
+    <nav>
+        <a href="#">Home</a>
+        <a href="#productContainer">Shop</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+    </nav>
+</header>
+
+<section class="hero">
+    <div class="hero-content">
+        <img src="logo.png" alt="Nexel Clothing Logo" class="hero-logo">
+        <h1>Luxury Meets Lifestyle</h1>
+        <p>Clothing. Phones. Perfumes.</p>
+        <a href="#productContainer" class="btn">Shop Now</a>
+    </div>
+</section>
+
+<section class="shop">
+    <h2 class="section-title">Shop</h2>
+
+    <div class="filters">
+        <button onclick="filterProducts('All')">All</button>
+        <button onclick="filterProducts('Clothing')">Clothing</button>
+        <button onclick="filterProducts('Phones')">Phones</button>
+        <button onclick="filterProducts('Perfumes')">Perfumes</button>
+    </div>
+
+    <div class="products" id="productContainer"></div>
+</section>
+
+<div style="text-align:center; margin:40px;">
+    <button onclick="showLogin()">Admin Access</button>
+</div>
+
+<div id="loginModal" class="modal">
+    <div class="modal-content">
+        <h2>Admin Login</h2>
+        <input type="password" id="adminPassword" placeholder="Enter Password">
+        <button onclick="checkPassword()">Login</button>
+    </div>
+</div>
+
+<section class="admin" id="adminPanel" style="display:none;">
+    <h2 class="section-title">Admin Panel</h2>
+
+    <input type="text" id="productName" placeholder="Product Name">
+    <input type="text" id="productPrice" placeholder="Price (e.g R599)">
+    
+    <select id="productCategory">
+        <option value="Clothing">Clothing</option>
+        <option value="Phones">Phones</option>
+        <option value="Perfumes">Perfumes</option>
+    </select>
+
+    <input type="file" id="productImage">
+    <button onclick="addProduct()">Add Product</button>
+</section>
+
+<footer>
+    <p>© 2026 Nexel Clothing. All Rights Reserved.</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
