@@ -38,6 +38,7 @@
         <a href="#productContainer">Shop</a>
         <a href="#about">About</a>
         <a href="#contact">Contact</a>
+        <a href="#" onclick="showLogin()" style="color: #D4AF37;">Admin</a>
     </nav>
 </header>
 
@@ -63,32 +64,69 @@
     <div class="products" id="productContainer"></div>
 </section>
 
-<div style="text-align:center; margin:40px;">
-    <button onclick="showLogin()">Admin Access</button>
-</div>
-
 <div id="loginModal" class="modal">
     <div class="modal-content">
+        <span class="close" onclick="closeLogin()">&times;</span>
         <h2>Admin Login</h2>
-        <input type="password" id="adminPassword" placeholder="Enter Password">
+        <input type="password" id="adminPassword" placeholder="Enter Password" onkeypress="if(event.key==='Enter') checkPassword()">
         <button onclick="checkPassword()">Login</button>
     </div>
 </div>
 
 <section class="admin" id="adminPanel" style="display:none;">
-    <h2 class="section-title">Admin Panel</h2>
+    <div class="admin-header">
+        <h2 class="section-title">Admin Panel</h2>
+        <button onclick="logout()" class="logout-btn">Logout</button>
+    </div>
 
-    <input type="text" id="productName" placeholder="Product Name">
-    <input type="text" id="productPrice" placeholder="Price (e.g R599)">
-    
-    <select id="productCategory">
-        <option value="Clothing">Clothing</option>
-        <option value="Phones">Phones</option>
-        <option value="Perfumes">Perfumes</option>
-    </select>
+    <div class="admin-container">
+        <div class="admin-form">
+            <h3>Add New Product</h3>
+            
+            <div class="form-group">
+                <label for="productName">Product Name</label>
+                <input type="text" id="productName" placeholder="Enter product name">
+            </div>
 
-    <input type="file" id="productImage">
-    <button onclick="addProduct()">Add Product</button>
+            <div class="form-group">
+                <label for="productPrice">Price</label>
+                <input type="text" id="productPrice" placeholder="e.g R599">
+            </div>
+
+            <div class="form-group">
+                <label for="productCategory">Category</label>
+                <select id="productCategory">
+                    <option value="">Select Category</option>
+                    <option value="Clothing">Clothing</option>
+                    <option value="Phones">Phones</option>
+                    <option value="Perfumes">Perfumes</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="productImage">Product Image</label>
+                <div class="file-input-wrapper">
+                    <input type="file" id="productImage" accept="image/*">
+                    <span id="fileName">No file chosen</span>
+                </div>
+                <div id="imagePreview" class="image-preview"></div>
+            </div>
+
+            <button onclick="addProduct()" class="add-btn">Add Product</button>
+            <div id="successMessage" class="success-message" style="display:none;">✓ Product added successfully!</div>
+        </div>
+
+        <div class="admin-products">
+            <h3>Manage Products</h3>
+            <div class="category-tabs">
+                <button onclick="showCategoryProducts('All')" class="tab-btn active">All Products</button>
+                <button onclick="showCategoryProducts('Clothing')" class="tab-btn">Clothing</button>
+                <button onclick="showCategoryProducts('Phones')" class="tab-btn">Phones</button>
+                <button onclick="showCategoryProducts('Perfumes')" class="tab-btn">Perfumes</button>
+            </div>
+            <div id="adminProductsList" class="admin-products-list"></div>
+        </div>
+    </div>
 </section>
 
 <footer>

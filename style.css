@@ -15,17 +15,25 @@ header {
     justify-content: space-between;
     padding: 20px 60px;
     align-items: center;
+    background: rgba(0, 0, 0, 0.95);
+    border-bottom: 1px solid #D4AF37;
 }
 
 .logo img {
     width: 80px;
 }
 
+nav {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
 nav a {
     color: white;
     text-decoration: none;
-    margin-left: 30px;
     transition: 0.3s;
+    font-size: 14px;
 }
 
 nav a:hover {
@@ -48,16 +56,6 @@ nav a:hover {
     margin-bottom: 30px;
     animation: logoBounce 1s ease;
     filter: drop-shadow(0 0 25px #D4AF37) drop-shadow(0 0 15px #C9A227);
-    background: linear-gradient(90deg, #D4AF37 0%, #FFFACD 50%, #D4AF37 100%);
-    background-size: 200% 100%;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    animation: shimmer 3s infinite;
-}
-
-@keyframes shimmer {
-    0% { background-position: -200% 0; }
-    100% { background-position: 200% 0; }
 }
 
 .hero h1 {
@@ -81,6 +79,9 @@ nav a:hover {
     border-radius: 30px;
     transition: 0.3s;
     box-shadow: 0 0 20px #D4AF37;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
 }
 
 .hero .btn:hover {
@@ -96,6 +97,10 @@ nav a:hover {
     margin: 60px 0;
 }
 
+.shop {
+    padding: 40px 20px;
+}
+
 .filters {
     text-align: center;
     margin-bottom: 40px;
@@ -109,6 +114,7 @@ nav a:hover {
     color: #D4AF37;
     cursor: pointer;
     transition: 0.3s;
+    border-radius: 20px;
 }
 
 .filters button:hover {
@@ -131,6 +137,13 @@ nav a:hover {
     padding: 30px;
     text-align: center;
     animation: fadeUp 0.6s ease forwards;
+    border-radius: 10px;
+    transition: transform 0.3s;
+}
+
+.product-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3);
 }
 
 .product-card img {
@@ -138,9 +151,40 @@ nav a:hover {
     height: 200px;
     object-fit: cover;
     margin-bottom: 15px;
+    border-radius: 5px;
 }
 
-.product-card button {
+.product-card .no-image {
+    width: 100%;
+    height: 200px;
+    background: #222;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    color: #666;
+}
+
+.product-card h3 {
+    margin: 15px 0;
+    font-size: 18px;
+}
+
+.product-card .price {
+    color: #D4AF37;
+    font-weight: bold;
+    font-size: 18px;
+    margin: 10px 0;
+}
+
+.product-card .category {
+    font-size: 12px;
+    opacity: 0.7;
+    margin: 5px 0 15px;
+}
+
+.product-card .order-btn {
     padding: 10px 20px;
     background: #D4AF37;
     border: none;
@@ -148,9 +192,10 @@ nav a:hover {
     font-weight: bold;
     cursor: pointer;
     border-radius: 20px;
+    transition: 0.3s;
 }
 
-.product-card button:hover {
+.product-card .order-btn:hover {
     background: #C9A227;
 }
 
@@ -159,36 +204,406 @@ nav a:hover {
     to { opacity: 1; transform: translateY(0); }
 }
 
-.admin input, .admin select {
-    padding: 10px;
-    margin: 10px;
-    width: 250px;
-    background: #111;
-    border: 1px solid #D4AF37;
-    color: white;
+/* ====================
+   MODAL STYLES
+   ==================== */
+
+.modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.95);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
 }
 
-.admin button {
+.modal-content {
+    background: #1a1a1a;
+    padding: 40px;
+    border: 2px solid #D4AF37;
+    text-align: center;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 400px;
+    position: relative;
+}
+
+.modal-content h2 {
+    color: #D4AF37;
+    margin-bottom: 30px;
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+}
+
+.modal-content input {
+    width: 100%;
+    padding: 12px;
+    margin: 15px 0;
+    background: #111;
+    border: 1px solid #D4AF37;
+    color: #fff;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.modal-content input:focus {
+    outline: none;
+    box-shadow: 0 0 10px #D4AF37;
+}
+
+.modal-content button {
+    width: 100%;
+    padding: 12px;
+    background: #D4AF37;
+    border: none;
+    color: black;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 20px;
+    transition: 0.3s;
+    font-size: 16px;
+}
+
+.modal-content button:hover {
+    background: #C9A227;
+}
+
+.close {
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    font-size: 28px;
+    font-weight: bold;
+    color: #D4AF37;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.close:hover {
+    color: #C9A227;
+}
+
+/* ====================
+   ADMIN PANEL STYLES
+   ==================== */
+
+.admin {
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+    padding: 40px 20px;
+    min-height: 100vh;
+}
+
+.admin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+.admin-header h2 {
+    margin: 0;
+}
+
+.logout-btn {
     padding: 10px 20px;
     background: #D4AF37;
     border: none;
     color: black;
     font-weight: bold;
     cursor: pointer;
+    border-radius: 20px;
+    transition: 0.3s;
 }
 
-.modal {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.8);
-    justify-content: center;
-    align-items: center;
+.logout-btn:hover {
+    background: #C9A227;
 }
 
-.modal-content {
+.admin-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.admin-form,
+.admin-products {
     background: #111;
-    padding: 40px;
+    padding: 30px;
     border: 1px solid #D4AF37;
+    border-radius: 10px;
+}
+
+.admin-form h3,
+.admin-products h3 {
+    color: #D4AF37;
+    margin-bottom: 20px;
+    font-size: 20px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #D4AF37;
+    font-weight: 500;
+    font-size: 14px;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 12px;
+    background: #1a1a1a;
+    border: 1px solid #D4AF37;
+    color: #fff;
+    border-radius: 5px;
+    font-size: 14px;
+    font-family: 'Poppins', sans-serif;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    box-shadow: 0 0 10px #D4AF37;
+    border-color: #C9A227;
+}
+
+.file-input-wrapper {
+    position: relative;
+    background: #1a1a1a;
+    border: 2px dashed #D4AF37;
+    border-radius: 5px;
+    padding: 20px;
     text-align: center;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.file-input-wrapper:hover {
+    background: #222;
+    border-color: #C9A227;
+}
+
+.file-input-wrapper input {
+    display: none;
+}
+
+.file-input-wrapper span {
+    color: #D4AF37;
+    font-size: 14px;
+    display: block;
+}
+
+#productImage {
+    cursor: pointer;
+}
+
+.image-preview {
+    margin-top: 15px;
+    text-align: center;
+}
+
+.image-preview img {
+    max-width: 150px;
+    max-height: 150px;
+    border-radius: 5px;
+    border: 1px solid #D4AF37;
+}
+
+.add-btn {
+    width: 100%;
+    padding: 12px;
+    background: #D4AF37;
+    border: none;
+    color: black;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 20px;
+    transition: 0.3s;
+    font-size: 16px;
+}
+
+.add-btn:hover {
+    background: #C9A227;
+}
+
+.success-message {
+    background: #1a5f1a;
+    border: 1px solid #4caf50;
+    color: #4caf50;
+    padding: 12px;
+    border-radius: 5px;
+    margin-top: 15px;
+    text-align: center;
+}
+
+.category-tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.tab-btn {
+    padding: 8px 15px;
+    background: #1a1a1a;
+    border: 1px solid #D4AF37;
+    color: #D4AF37;
+    cursor: pointer;
+    border-radius: 20px;
+    transition: 0.3s;
+    font-size: 12px;
+}
+
+.tab-btn.active {
+    background: #D4AF37;
+    color: black;
+    font-weight: bold;
+}
+
+.tab-btn:hover {
+    background: #D4AF37;
+    color: black;
+}
+
+.admin-products-list {
+    max-height: 600px;
+    overflow-y: auto;
+}
+
+.admin-product-card {
+    display: flex;
+    gap: 15px;
+    background: #1a1a1a;
+    border: 1px solid #333;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+
+.admin-product-card:hover {
+    border-color: #D4AF37;
+    background: #222;
+}
+
+.admin-product-image {
+    flex-shrink: 0;
+    width: 80px;
+    height: 80px;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.admin-product-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.admin-product-image .no-image {
+    width: 100%;
+    height: 100%;
+    background: #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    color: #666;
+}
+
+.admin-product-info {
+    flex-grow: 1;
+}
+
+.admin-product-info h4 {
+    color: #D4AF37;
+    margin-bottom: 8px;
+    font-size: 16px;
+}
+
+.admin-product-info p {
+    font-size: 13px;
+    margin: 4px 0;
+    color: #ccc;
+}
+
+.delete-btn {
+    padding: 8px 15px;
+    background: #c41c3b;
+    border: none;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 10px;
+    font-size: 12px;
+    transition: 0.3s;
+}
+
+.delete-btn:hover {
+    background: #a01530;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .admin-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    header {
+        padding: 15px 30px;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    nav {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .hero h1 {
+        font-size: 40px;
+    }
+
+    .section-title {
+        font-size: 28px;
+    }
+
+    .products {
+        gap: 20px;
+        padding: 20px;
+    }
+
+    .product-card {
+        width: 100%;
+        max-width: 300px;
+    }
+
+    .admin-form,
+    .admin-products {
+        padding: 20px;
+    }
+
+    .admin-container {
+        gap: 20px;
+    }
+}
+
+footer {
+    text-align: center;
+    padding: 30px;
+    background: rgba(0, 0, 0, 0.95);
+    border-top: 1px solid #D4AF37;
+    color: #ccc;
+    margin-top: 40px;
 }
